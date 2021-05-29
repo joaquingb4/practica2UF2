@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Lloguer {
 	//Atributos
+		private static final int diesInicials =3;
 		private Date data;
 		private int dies;
 		private Vehicle vehicle;
@@ -29,26 +30,26 @@ public class Lloguer {
 		}
 		
 		//__________________Refracción___________
-		public double quantitat() {
-	    	double quantitat = 0;
+		public double preu() {
+	    	double preu = 0;
 	    	switch (getVehicle().getCategoria()) {
 	        case Vehicle.BASIC:
-	            quantitat += 3;
-	            if (getDies() > 3) {
-	                quantitat += (getDies() - 3) * 1.5;
+	            preu += 3;
+	            if (getDies() > diesInicials) {
+	                preu += (getDies() - diesInicials) * 1.5;
 	            }
 	            break;
 	        case Vehicle.GENERAL:
-	            quantitat += 4;
+	            preu += 4;
 	            if (getDies() > 2) {
-	                quantitat += (getDies() - 2) * 2.5;
+	                preu += (getDies() - 2) * 2.5;
 	            }
 	            break;
 	        case Vehicle.LUXE:
-	            quantitat += getDies() * 6;
+	            preu += getDies() * 6;
 	            break;
 	    	}
-	    	return quantitat;
+	    	return preu;
 	    }
 		//____________________________________________
 		public int bonificacions() {
