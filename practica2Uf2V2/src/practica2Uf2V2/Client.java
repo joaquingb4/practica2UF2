@@ -3,7 +3,7 @@ package practica2Uf2V2;
 import java.util.Vector;
 
 public class Client {
-
+	private static final double EUROS_PER_UNITAT_DE_COST = 30;
     private String nif;
     private String nom;
     private String telefon;
@@ -40,41 +40,38 @@ public class Client {
     }
     //________________________________________________
     public String informe() {
-    	double total = 0;
-        int bonificacions = 0;
         String resultat = "Informe de lloguers del client " +
             getNom() +
             " (" + getNif() + ")\n";
         for (Lloguer lloguer: lloguers) {
-        	// afegeix lloguers freqüents
-            bonificacions ++;
-
-            // afegeix bonificació per dos dies de lloguer de Luxe
-            if (lloguer.getVehicle().getCategoria() == Vehicle.LUXE &&
-                    lloguer.getDies()>1 ) {
-                bonificacions ++;
-            }
-
+        	
             // composa els resultats d'aquest lloguer
             resultat += "\t" +
                 lloguer.getVehicle().getMarca() +
                 " " +
                 lloguer.getVehicle().getModel() + ": " +
-                (lloguer.quantitat() * 30) + "€" + "\n";
-            total = importeTotal();
+                (lloguer.quantitat() * EUROS_PER_UNITAT_DE_COST) + "€" + "\n";
         }
 
         // afegeix informació final
-        resultat += "Import a pagar: " + total + "€\n" +
-            "Punts guanyats: " + bonificacions + "\n";
+        resultat += "Import a pagar: " + importTotal() + "€\n" +
+            "Punts guanyats: " + bonifiacionsTotals() + "\n";
         return resultat;
     }
   //___________________Refracción_______________________
-    public double importeTotal() {
+    public double importTotal() {//<--de importe traducido a import
     	double total = 0;
     	for (Lloguer lloguer: lloguers) {
     		total+= lloguer.quantitat()*30;
     	}
     	return total;
     }
+    public int bonifiacionsTotals() {
+    	int bonificacions=0;
+    	for (Lloguer lloguer: lloguers) {
+        	bonificacions += lloguer.bonificacions();
+    	}
+    	return bonificacions;
+    }
+    
 }
